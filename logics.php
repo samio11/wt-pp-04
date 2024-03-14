@@ -72,14 +72,16 @@ if(isset($_REQUEST['submit'])){
         echo "please enter all the credentials";
     }
     else{
-        $sql = "insert into pp_tb_04 (name,email,password,role,address,phone) values('$name','$email','$password','$role','$address','$phone')";
-        $result = mysqli_query($conn,$sql);
-        if($result){
-            echo "successfully inserted";
-        }
-        else{
-            echo "failed to insert";
-        }
+        $mydb = new model();
+        $conobj= $mydb->OpenConn();
+       $result = $mydb->addUser($conobj,"pp_tb_04",$_REQUEST["name"],$_REQUEST["email"],$_REQUEST["password"],$_REQUEST["role"],$_REQUEST["address"],$_REQUEST["phone"]);
+       if($result){
+           echo "successfully inserted";
+           header('location: show_data.php');
+       }
+       else{
+           echo "failed to insert";
+       }
     }
 
 }
